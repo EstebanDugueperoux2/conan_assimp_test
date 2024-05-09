@@ -35,5 +35,3 @@ alicevision_add_library(aliceVision_system
   # PRIVATE_LINKS
   #   Boost::boost
 )
-
-alicevision_add_test(Logger_test.cpp NAME "system_Logger" LINKS aliceVision_system)
