@@ -8,7 +8,7 @@ class conan_assimp_testRecipe(ConanFile):
     package_type = "application"
     settings = "os", "compiler", "build_type", "arch"
 
-    exports_sources = "CMakeLists.txt", "src/*"
+    exports_sources = "CMakeLists.txt", "src/**"
 
     @property
     def _min_cppstd(self):
@@ -19,7 +19,7 @@ class conan_assimp_testRecipe(ConanFile):
         cmake_layout(self)
 
     def requirements(self):
-        self.requires("assimp/5.3.1")
+        self.requires("assimp/5.4.3")
         self.requires("openimageio/2.5.10.1")
         self.requires("boost/1.84.0")
         self.requires("eigen/3.4.0")
@@ -31,6 +31,7 @@ class conan_assimp_testRecipe(ConanFile):
 
     def generate(self):
         deps = CMakeDeps(self)
+        deps.set_property("minizip", "cmake_target_name", "MINIZIP::minizip")
         deps.generate()
         tc = CMakeToolchain(self)
         tc.generate()
@@ -38,7 +39,9 @@ class conan_assimp_testRecipe(ConanFile):
     def build(self):
         cmake = CMake(self)
         cmake.configure()
-        cmake.build()
+        cmake.verbose = True
+        # cmake.build(cli_args=["--verbose"], build_tool_args=["-j 10"])
+        cmake.build(cli_args=["--verbose"])
 
     def package(self):
         cmake = CMake(self)

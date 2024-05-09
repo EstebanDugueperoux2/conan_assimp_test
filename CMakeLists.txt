@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.15)
 project(conan_assimp_test CXX)
 
 find_package(assimp REQUIRED CONFIG)
+find_package(Boost REQUIRED CONFIG)
+find_package(OpenImageIO REQUIRED CONFIG)
 
 add_subdirectory(src)
 # add_executable(${PROJECT_NAME} src/conan_assimp_test.cpp src/main.cpp)
