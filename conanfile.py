@@ -31,16 +31,18 @@ class AliceVisionRecipe(ConanFile):
         cmake_layout(self)
 
     def requirements(self):
-        self.requires("assimp/5.4.3")
-        self.requires("openimageio/2.5.16.0")
+        self.requires("assimp/6.0.2")
+        self.requires("openimageio/2.5.18.0")
+        self.requires("freetype/2.13.2", override=True)
 
     def generate(self):
         tc = CMakeToolchain(self, generator="Ninja")
         tc.generate()
 
         deps = CMakeDeps(self)
-        deps.set_property("minizip", "cmake_target_name", "MINIZIP::minizip")
-        deps.generate()
+        # deps.set_property("minizip", "cmake_target_name", "MINIZIP::minizip")
+        # deps.set_property("minizip", "cmake_file_name", "MINIZIP")
+        deps.generate() 
         
     def build(self):
         cmake = CMake(self)
@@ -48,3 +50,6 @@ class AliceVisionRecipe(ConanFile):
         # dot -Tsvg -o graph.svg build/Release/graph.dot
         cmake.build(cli_args=["--verbose"], build_tool_args=["-j 5"])
 
+    def package(self):
+        cmake = CMake(self)
+        cmake.install()
