@@ -8,7 +8,7 @@
 
 #include <OpenImageIO/color.h>
 
-#include <boost/algorithm/string.hpp>
+// #include <boost/algorithm/string.hpp>
 
 #include <filesystem>
 #include <vector>

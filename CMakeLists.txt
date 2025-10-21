@@ -3,11 +3,13 @@ project(game CXX)
 
 find_package(assimp REQUIRED)
 find_package(OpenImageIO REQUIRED)
+find_package(Boost REQUIRED)
 
 add_executable(game src/main.cpp src/colorspace.hpp src/colorspace.cpp)
 target_link_libraries(game assimp::assimp
 OpenImageIO::OpenImageIO
-OpenImageIO::OpenImageIO_Util)
+OpenImageIO::OpenImageIO_Util
+Boost::boost)
 
 
 install(TARGETS game DESTINATION "."

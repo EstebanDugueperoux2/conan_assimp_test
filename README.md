@@ -2,11 +2,11 @@
 
 See https://github.com/conan-io/conan-center-index/issues/25765
 
-docker run --memory=10g --cpus=10 --rm -ti debian:bullseye
+sudo docker run --memory=10g --cpus=10 -docker.io/conanio/gcc11-ubuntu16.04:2.21.04:2.21.0
 
-apt -y update
+sudo apt -y update
 
-apt install -y python3-pip cmake ninja-build git vim pkg-config
+sudo apt install -y python3-pip cmake ninja-build git vim pkg-config
 
 pip install --upgrade "conan"
 
@@ -15,9 +15,8 @@ git clone https://github.com/EstebanDugueperoux2/conan_assimp_test.git
 cd conan_assimp_test
 
 # With gcc
-time conan install . --build missing -s build_type=Debug --profile:build .conan/profiles/build_profile --profile:host .conan/profiles/build_profile -c tools.system.package_manager:mode=install &> build.log
-
-time conan build . --build missing -s build_type=Debug --profile:build .conan/profiles/build_profile --profile:host .conan/profiles/build_profile -c tools.system.package_manager:mode=install &> build.log
+time conan install . --build missing -s build_type=Debug --profile:build .conan/profiles/build_profile --profile:host .conan/profiles/build_profile -c tools.system.package_manager:mode=install  -c tools.system.package_manager:sudo=True	 &> install.log
+time conan build .   --build missing -s build_type=Debug --profile:build .conan/profiles/build_profile --profile:host .conan/profiles/build_profile -c tools.system.package_manager:mode=install &> build.log
 
 conan graph info . --format=html  -s build_type=Debug --profile:build .con
 an/profiles/build_profile --profile:host .conan/profiles/build_profile &> graph.html
